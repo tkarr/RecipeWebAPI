@@ -9,7 +9,7 @@ using RecipeWebAPI.Models;
 
 namespace RecipeWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/recipes")]
     [ApiController]
     public class RecipesController : ControllerBase
     {
@@ -22,18 +22,30 @@ namespace RecipeWebAPI.Controllers
 
         // GET: api/Recipes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
+        public async Task<ActionResult<IEnumerable<RecipeDTO>>> GetRecipes()
         {
           if (_context.Recipes == null)
           {
               return NotFound();
           }
-            return await _context.Recipes.ToListAsync();
+            return await _context.Recipes.Select(x => RecipeDTO(x)).ToListAsync();
+        }
+
+        private static RecipeDTO RecipeDTO(Recipe x)
+        {
+            return new RecipeDTO
+            {
+                Id = x.Id,
+                Name = x.Name,
+                ImagePath = x.ImagePath,
+                Description = x.Description,
+                Ingredients = x.Ingredients
+            };
         }
 
         // GET: api/Recipes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Recipe>> GetRecipe(string id)
+        public async Task<ActionResult<RecipeDTO>> GetRecipe(string id)
         {
           if (_context.Recipes == null)
           {
@@ -46,13 +58,13 @@ namespace RecipeWebAPI.Controllers
                 return NotFound();
             }
 
-            return recipe;
+            return RecipeDTO(recipe);
         }
 
         // PUT: api/Recipes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRecipe(string id, Recipe recipe)
+        public async Task<IActionResult> PutRecipe(string id, RecipeDTO recipe)
         {
             if (id != recipe.Name)
             {
@@ -83,20 +95,29 @@ namespace RecipeWebAPI.Controllers
         // POST: api/Recipes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Recipe>> PostRecipe(Recipe recipe)
+        public async Task<ActionResult<Recipe>> PostRecipe(RecipeDTO recipe)
         {
-          if (_context.Recipes == null)
-          {
-              return Problem("Entity set 'RecipeContext.Recipes'  is null.");
-          }
-            _context.Recipes.Add(recipe);
+            var recipeItem = new Recipe
+            {
+                Id = recipe.Id,
+                Name = recipe.Name,
+                Ingredients = recipe.Ingredients,
+                ImagePath = recipe.ImagePath,
+                Description = recipe.Description
+            };
+
+            if (_context.Recipes == null)
+            {
+                return Problem("Entity set 'RecipeContext.Recipes'  is null.");
+            }
+            _context.Recipes.Add(recipeItem);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (RecipeExists(recipe.Name))
+                if (RecipeExists(recipeItem.Name))
                 {
                     return Conflict();
                 }
@@ -106,7 +127,7 @@ namespace RecipeWebAPI.Controllers
                 }
             }
 
-            return CreatedAtAction(nameof(GetRecipe), new { id = recipe.Name }, recipe);
+            return CreatedAtAction(nameof(GetRecipe), new { id = recipeItem.Name }, recipeItem);
         }
 
         // DELETE: api/Recipes/5
