@@ -1,0 +1,7 @@
+D:\Projects\RecipeAPI\RecipeWebAPI\RecipeWebAPI\obj\Debug\net5.0\RecipeWebAPI.csproj.AssemblyReference.cache
+D:\Projects\RecipeAPI\RecipeWebAPI\RecipeWebAPI\obj\Debug\net5.0\RecipeWebAPI.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\RecipeAPI\RecipeWebAPI\RecipeWebAPI\obj\Debug\net5.0\RecipeWebAPI.AssemblyInfoInputs.cache
+D:\Projects\RecipeAPI\RecipeWebAPI\RecipeWebAPI\obj\Debug\net5.0\RecipeWebAPI.AssemblyInfo.cs
+D:\Projects\RecipeAPI\RecipeWebAPI\RecipeWebAPI\obj\Debug\net5.0\RecipeWebAPI.csproj.CoreCompileInputs.cache
+D:\Projects\RecipeAPI\RecipeWebAPI\RecipeWebAPI\obj\Debug\net5.0\RecipeWebAPI.MvcApplicationPartsAssemblyInfo.cs
+D:\Projects\RecipeAPI\RecipeWebAPI\RecipeWebAPI\obj\Debug\net5.0\RecipeWebAPI.MvcApplicationPartsAssemblyInfo.cache
