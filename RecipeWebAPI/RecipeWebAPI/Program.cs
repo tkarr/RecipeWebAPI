@@ -1,5 +1,6 @@
-using RecipeWebAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using RecipeWebAPI.Models.Recipe;
+using RecipeWebAPI.Models.Shared;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -21,6 +22,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<RecipeContext>(opt => opt.UseInMemoryDatabase("RecipeList"));
+builder.Services.AddDbContext<IngredientContext>(opt => opt.UseInMemoryDatabase("IngredientList"));
 
 var app = builder.Build();
 
